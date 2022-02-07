@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="=X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Barcode reader lite</title>
+
+    <style>
+        h1 { text-align: center}
+        #container {
+            margin: 0px auto;
+            width: 500px;
+            height: 375px;
+            border: 10px #333 solid;
+        }
+        #videoElement {
+            width: 500px;
+            height: 375px;
+            background-color: #666;
+        }
+    </style>
+</head>
+<body>
+    <button onclick="window.location.href='website.html'">Home page</button>
+    <button onclick="window.location.href='products.html'">Your products</button>
+
+    <h1>
+        Display webcam stream
+    </h1>
+    <div id="container">
+        <video autoplay="true" id="videoElement">
+        </video>
+    </div>
+    <script src="http://ajax.googleapis.com/ajax/libs/jquery/1.7.1/jquery.min.js" type="text/javascript"></script>
+
+    <script src="quagga.min.js"></script>
+
+    <script src="application.js"></script>
+    <h1>Code of scanned product: <span id="ProductCode"></span></h1>
+</body>
+</html>
