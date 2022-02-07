@@ -35,14 +35,25 @@ app.listen('3000', () => {
 
 app.post('/update', (req, res) => {
     console.log(req.body)
-    // const answer = db.prepare(``).all()
-    res.send({ message: 'added product' })
+    // const answer = db.prepare(`update products set ilosc = ilosc + ${value}`).all()
+    res.send({ message: 'Updated product count' })
 })
 
 app.get('/list', (req, res) => {
     const answer = db.prepare(`select * from products;`).all()
     console.log(answer)
     res.send({ message: 'list' })
+})
+
+app.get('/one',(req, res) => {
+    const answer = db.prepare(`select * from products where code_id = //TODO//`)
+    console.log(answer)
+    res.send({message: 'Showed by id'})
+})
+
+app.post('/create', (req, res) => {
+    const answer = db.prepare(`insert into products values //TO DO//`)
+    res.send({message: "Created new product"})
 })
 
 // const usun = async(ctx) => {
