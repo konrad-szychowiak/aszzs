@@ -18,7 +18,7 @@ app.use(bodyParser.json())
 // })
 
 app.get('/createdb', (req, res) => {
-    // db.exec(`-- drop table if exists log;`)
+    // db.exec(`drop table if exists log;`)
     db.exec(`drop table if exists products;`)
     db.exec(`create table products
              (
@@ -66,12 +66,29 @@ app.get('/one/:code', (req, res) => {
     res.send({...answer})
 })
 
-app.post('/create', (req, res) => {
+app.post('/scan', (req, res) => {
     console.log(req.body)
     const {code, name, reserve} = req.body;
-    const [answer] = db.prepare(`insert into products ("code", "name", "reserve")
+
+    const [isInDB] = db.prepare(`SELECT EXISTS(SELECT 1 FROM products WHERE code=${code});`).all()
+    console.log(!!isInDB)
+    if (isInDB)
+    {
+        const [answer] = db.prepare(`update products
+                               set name     = '${name}',
+                                   reserve  = (select reserve from products where code = ${code}) + ${reserve}
+                               where code = ${code}
+        returning *
+    `).all()
+        res.send({message: "updated", product: answer})
+    }
+    else
+    {
+        const [answer] = db.prepare(`insert into products ("code", "name", "reserve")
                                  values (${code}, '${name}', ${reserve}) returning *;`).all()
-    res.send({message: "Created new product", created: answer})
+        res.send({message: "created", product: answer})
+
+    }
 })
 
 app.delete('/product/:code', (req, res) => {

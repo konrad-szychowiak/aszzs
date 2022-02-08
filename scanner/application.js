@@ -1,3 +1,5 @@
+const UPDATE_ADDR = `localhost:3000/scan`
+
 function sortByFrequency(array) {
     var frequency = {};
 
@@ -42,9 +44,10 @@ Quagga.onDetected(async function (result){
         Quagga.stop();
         console.log(code);
         const info = (await axios.get(`https://world.openfoodfacts.org/api/v0/product/${code}.json?fields=product_name,quantity,brands`)).data
-
         document.getElementById("ProductCode").innerHTML = code;
-        document.getElementById("product__description").innerHTML = JSON.stringify(info);
+        document.getElementById("product__description").innerHTML = JSON.stringify({code: info.code, name: info.product.product_name});
+
+        axios.post(UPDATE_ADDR, {code: info.code, name: info.product.product_name, reserve: 1 })
     }
 });
 
