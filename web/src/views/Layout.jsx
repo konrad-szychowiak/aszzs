@@ -4,9 +4,10 @@ import {Link, Outlet} from "react-router-dom";
 export function Layout() {
     return <>
         <header className="top">
-            <h1>Food Reserve</h1>
+            <div className={'top__title'}>Food Reserve</div>
+
             <Link to={'/add'}>
-                <button>add</button>
+                <button className={'top__btn is-safe'}>add</button>
             </Link>
         </header>
 

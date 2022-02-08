@@ -1,5 +1,5 @@
 import React from "react";
-import {Product, useGetAsync} from "@/helpers";
+import {api, Product, useGetAsync} from "@/helpers";
 import axios from 'axios'
 import {ProductCard} from "@/views/ProductCard";
 
@@ -8,7 +8,7 @@ export function List() {
         value: products,
         call: fetchProducts
     } = useGetAsync(async () =>
-        (await axios.get(`http://localhost:3000/list/`)).data.map(Product)
+        (await api.get(`/list`)).data.map(Product)
         , {
         dependencies: [],
         initialCall: true

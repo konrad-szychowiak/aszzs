@@ -4,8 +4,64 @@
   <meta charset="UTF-8">
   <title>Title</title>
   <style>
+    body,html{
+      margin: 0;
+      padding: 0;
+      background-color: white;
+    }
     .top {
       display: flex;
+      justify-content: space-between;
+      border: thin solid #C4C4C4;
+      margin-bottom: 1em;
+    }
+    .top__title {
+      font-size: 2em;
+      color: #C4C4C4;
+      padding: .25em .5em;
+      border-right: thin solid #C4C4C4;
+
+    }
+    .top__btn {
+      border: none;
+      border-left: thin solid #C4C4C4;
+      height: 100%;
+      display: flex;
+      font-size: 1.5em;
+      padding: .25em .5em;
+      justify-content: center;
+      align-items: center;
+      cursor: pointer;
+    }
+    .control {}
+    .control__value
+    {
+      font-weight: bold;
+      margin: 0 .5em;
+      font-size: 1.5em;
+    }
+    .control__row
+    {
+      display: flex;
+      flex-direction: row;
+    }
+    .btn {
+      background-color: white;
+      border: thin solid #C4C4C4;
+      padding: .5em .5em;
+      font-size: 1em;
+      cursor: pointer;
+    }
+    .btn.is-long {
+      width: 100%;
+      margin: 1em 0;
+      justify-content: center;
+    }
+    .mw1 {
+      margin-left: 1em;
+    }
+    a {
+      text-decoration: none;
     }
     .cards {
       display: grid;
@@ -44,6 +100,5 @@
 </head>
 <body>
   <div id="root"></div>
-
 </body>
 </html>

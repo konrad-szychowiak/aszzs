@@ -9,11 +9,11 @@ export function ProductCard({hasDetailsLink = true, hasDeleteLink = true, produc
         </div>
         <div className="product__actions">
             {hasDetailsLink && <Link to={`/read/${product.code}`}>
-                <button>details</button>
+                <button className={'btn'}>See details</button>
             </Link>}
             {hasDeleteLink &&
             <Link to={`/delete/${product.code}`}>
-                <button>delete</button>
+                <button className={'btn mw1'}>Delete</button>
             </Link>}
         </div>
     </div>;

@@ -70,9 +70,9 @@ app.post('/scan', (req, res) => {
     console.log(req.body)
     const {code, name, reserve} = req.body;
 
-    const [isInDB] = db.prepare(`SELECT EXISTS(SELECT 1 FROM products WHERE code=${code});`).all()
-    console.log(!!isInDB)
-    if (isInDB)
+    const [isInDB] = db.prepare(`SELECT EXISTS(SELECT 1 FROM products WHERE code=${code}) as status;`).all()
+    console.log(isInDB.status)
+    if (isInDB.status === 1)
     {
         const [answer] = db.prepare(`update products
                                set name     = '${name}',

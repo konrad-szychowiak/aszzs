@@ -1,6 +1,6 @@
 import React, {useState} from "react";
 import {useParams} from "react-router";
-import {Product, useGetAsync} from "@/helpers";
+import {api, Product, useGetAsync} from "@/helpers";
 import axios from "axios";
 import {ProductCard} from "@/views/ProductCard";
 import {Link} from "react-router-dom";
@@ -8,15 +8,17 @@ import {Link} from "react-router-dom";
 function ValueControl({name, value, onChange}) {
     const [val, setVal] = useState(value);
     return <>
-        <div>
+        <div className={'control'}>
             <h3>{name}</h3>
-            <button onClick={() => setVal(Math.max(val - 1, 0))}>-</button>
-            <span>{val}</span>
-            <button onClick={() => setVal(val + 1)}>+</button>
-            <button onClick={() => {
-                onChange(val)
-            }
-            }>save</button>
+            <div className={'control__row'}>
+                <button className={'btn'} onClick={() => setVal(Math.max(val - 1, 0))}>decrease</button>
+                <span className={'control__value'}>{val}</span>
+                <button className={'btn'} onClick={() => setVal(val + 1)}>increase</button>
+                {val !== value && <button className={'btn is-medium'}
+                                          onClick={() => {
+                                              onChange(val)
+                                          }}>save</button>}
+            </div>
         </div>
     </>
 }
@@ -28,7 +30,7 @@ export function Read() {
         setValue: setProduct,
         call: fetchProduct
     } = useGetAsync(async () =>
-            Product((await axios.get(`http://localhost:3000/one/${code}`)).data)
+            Product((await api.get(`/one/${code}`)).data)
         , {
             dependencies: [],
             initialCall: true
@@ -41,14 +43,16 @@ export function Read() {
         <main className="cards details">
             <section>
                 <Link to={'/list'}>
-                    <button>Go back</button>
+                    <button className={'btn is-long'}>Go back</button>
                 </Link>
 
                 <ProductCard product={product} hasDetailsLink={false}/>
 
-                <button onClick={() => {
-                    axios.post(`http://localhost:3000/update/`, product)
-                }}>Save</button>
+                <button className={'btn is-long'}
+                        onClick={() => {
+                            api.post(`/update/`, product)
+                        }}>Save changes
+                </button>
             </section>
 
             <section>
