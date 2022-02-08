@@ -1,0 +1,27 @@
+.top {
+  display: flex;
+}
+.cards {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  grid-gap: 3em;
+  margin: 0 3em;
+}
+.product {
+  border: solid thin;
+  padding: 1em;
+  display: flex;
+  flex-direction: column;
+}
+.product__name {
+  font-size: 2em;
+  font-weight: bold;
+}
+.product__actions {
+  display: flex;
+  align-items: center;
+  justify-content: flex-end;
+}
+.is-critical {
+  background-color: red;
+}

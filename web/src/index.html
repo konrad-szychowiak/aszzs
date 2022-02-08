@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Title</title>
+  <style>
+    .top {
+      display: flex;
+    }
+    .cards {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      grid-gap: 3em;
+      margin: 0 3em;
+    }
+    .product {
+      border: solid thin #C4C4C4;
+      padding: 1em;
+      display: flex;
+      flex-direction: column;
+    }
+    .product__name {
+      font-size: 2em;
+      font-weight: bold;
+    }
+    .product__actions {
+      display: flex;
+      align-items: center;
+      justify-content: flex-end;
+    }
+    .is-critical {
+      background-color: #EB5757;
+    }
+    .is-medium {
+      background-color: #F2C94C;
+    }
+    .is-safe {
+      background-color: #6FCF97;
+    }
+    .is-no {
+      background-color: #E5E5E5;
+    }
+  </style>
+</head>
+<body>
+  <div id="root"></div>
+
+</body>
+</html>
