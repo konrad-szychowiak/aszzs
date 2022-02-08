@@ -30,18 +30,22 @@ Quagga.init({
     Quagga.start();
 });
 
+
+
 var results= [];
-Quagga.onDetected(function (result){
+Quagga.onDetected(async function (result){
     var last_code = result.codeResult.code;
     results.push(last_code);
     if(results.length > 10) {
-        code = sortByFrequency(results)[0]; //code that we need to recognise products
+        const code = sortByFrequency(results)[0]; //code that we need to recognise products
         results = [];
         Quagga.stop();
         console.log(code);
-        document.getElementById("ProductCode").innerHTML = code;
-    }
+        const info = (await axios.get(`https://world.openfoodfacts.org/api/v0/product/${code}.json?fields=product_name,quantity,brands`)).data
 
+        document.getElementById("ProductCode").innerHTML = code;
+        document.getElementById("product__description").innerHTML = JSON.stringify(info);
+    }
 });
 
 let video = document.querySelector("#videoElement");
