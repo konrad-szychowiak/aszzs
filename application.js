@@ -19,7 +19,7 @@ Quagga.init({
         target: document.querySelector('#container')
     },
     decoder : {
-        readers : ["ean_reader", "ean_8_reader"]
+        readers : ["ean_reader"]
     }
 }, function(err) {
     if (err) {
