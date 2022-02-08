@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Products</title>
+    <script src="//unpkg.com/alpinejs" defer></script>
+    <script src="https://unpkg.com/axios/dist/axios.min.js"></script>
+    <link rel="stylesheet" href="./style.css">
+</head>
+<body x-init="">
+<header class="top">
+    <h1>Food Reserve</h1>
+    <button>add</button>
+</header>
+<main class="cards">
+    <template x-for="product in $store.products">
+        <div class="product">
+            <span class="product__name" x-text="product.name"></span>
+<!--            <code x-text="product.code"></code>-->
+            <div class="product__reserve">
+                Reserve: <span x-text="product.reserve"></span>
+            </div>
+            <div class="product__actions">
+                <button>details</button>
+                <button disabled>delete</button>
+            </div>
+        </div>
+    </template>
+</main>
+
+<script>
+    async function fetchProducts()
+    {
+        const res = (await axios.get('http://localhost:3000/list')).data.list
+        console.log(res)
+        Alpine.store('products', res)
+    }
+
+    document.addEventListener('alpine:init', () => {
+        Alpine.store('products', [])
+        fetchProducts()
+    })
+</script>
+</body>
+</html>

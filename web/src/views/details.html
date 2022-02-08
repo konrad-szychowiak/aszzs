@@ -1,0 +1,78 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Read</title>
+  <script defer src="//unpkg.com/alpinejs"></script>
+  <script src="https://unpkg.com/axios/dist/axios.min.js"></script>
+  <link href="style.css" rel="stylesheet">
+</head>
+<body x-init="">
+<header class="top">
+  <h1>Food Reserve</h1>
+  <button>add</button>
+</header>
+<template x-for="product in $store.products">
+  <button @click="select(product.code)"><span x-text="product.name"></span>@<span x-text="product.code"></span></button>
+</template>
+
+<pre x-text="JSON.stringify($store.selected)"></pre>
+
+<template x-if="$store.selected">
+  <main class="details">
+    <button>go back</button>
+
+    <div :class="`product is-${$store.selected.level()}`">
+      <h2 x-text="$store.selected.name"></h2>
+      <span x-text="$store.selected.level()"></span> reserve
+      <div class="product__actions">
+        <button>delete</button>
+      </div>
+    </div>
+
+
+    <h2>reserve</h2>
+
+    <div>
+      <h3>reserve</h3>
+      <button>-</button>
+      <span>{reserve}</span>
+      <button>+</button>
+    </div>
+
+    critical level: <span>{critical}</span>
+    medium level: <span>{medium}</span>
+  </main>
+</template>
+
+
+<script>
+    async function select(code) {
+        const res = (await axios.get(`http://localhost:3000/one/${code}`)).data.product
+        console.log(res)
+        Alpine.store('selected', {
+            ...res,
+            level() {
+                if (this.reserve === 0) return 'no'
+                else if (this.reserve > this.medium) return 'safe'
+                else if (this.reserve <= this.critical) return 'critical'
+                return 'medium'
+            }
+        })
+    }
+
+    async function fetchProducts() {
+        const res = (await axios.get('http://localhost:3000/list')).data.list
+        console.log(res)
+        Alpine.store('products', res)
+    }
+
+    document.addEventListener('alpine:init', () => {
+        Alpine.store('products', [])
+        Alpine.store('selected', undefined)
+        fetchProducts()
+        select(1)
+    })
+</script>
+</body>
+</html>
